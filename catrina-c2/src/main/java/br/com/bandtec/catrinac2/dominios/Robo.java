@@ -12,6 +12,9 @@ public class Robo {
   private String modelo;
   private Integer capacidadeBateria;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  private Fabricante fabricante;
+
   public Robo(Integer id, String nome, String modelo, Integer capacidadeBateria) {
     this.id = id;
     this.nome = nome;
@@ -21,6 +24,7 @@ public class Robo {
 
   public Robo() {
   }
+
 
   public Integer getId() {
     return id;
@@ -52,5 +56,13 @@ public class Robo {
 
   public void setCapacidadeBateria(Integer capacidadeBateria) {
     this.capacidadeBateria = capacidadeBateria;
+  }
+
+  public Fabricante getFabricante() {
+    return fabricante;
+  }
+
+  public void setFabricante(Fabricante fabricante) {
+    this.fabricante = fabricante;
   }
 }
