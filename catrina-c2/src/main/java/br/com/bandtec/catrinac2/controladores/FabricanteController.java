@@ -1,12 +1,17 @@
 package br.com.bandtec.catrinac2.controladores;
 
+import br.com.bandtec.catrinac2.Lista.ListaObj;
 import br.com.bandtec.catrinac2.dominios.Fabricante;
 import br.com.bandtec.catrinac2.repositorios.FabricanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
+import java.io.FileWriter;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,12 +34,8 @@ public class FabricanteController {
 
   @GetMapping("/{id}")
   public ResponseEntity busca(@PathVariable Integer id){
-    if(fabricanteRepository.existsById(id)){
-      Optional<Fabricante> optionalFabricante = fabricanteRepository.findById(id);
-      return ResponseEntity.ok(optionalFabricante);
-    }
-
-    return ResponseEntity.notFound().build();
+    Optional<Fabricante> optionalFabricante = fabricanteRepository.findById(id);
+    return ResponseEntity.of(optionalFabricante);
   }
 
   @PostMapping

@@ -31,12 +31,8 @@ public class RoboController {
 
   @GetMapping("/{id}")
   public ResponseEntity busca(@PathVariable Integer id){
-    if(roboRepository.existsById(id)){
-      Optional<Robo> optionalRobo = roboRepository.findById(id);
-      return ResponseEntity.ok(optionalRobo);
-    }
-
-    return ResponseEntity.notFound().build();
+    Optional<Robo> optionalRobo = roboRepository.findById(id);
+    return ResponseEntity.of(optionalRobo);
   }
 
 

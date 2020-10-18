@@ -1,7 +1,7 @@
 package br.com.bandtec.catrinac2.controladores;
 
+import br.com.bandtec.catrinac2.dominios.Fabricante;
 import br.com.bandtec.catrinac2.dominios.Pais;
-import br.com.bandtec.catrinac2.dominios.Robo;
 import br.com.bandtec.catrinac2.repositorios.PaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,12 +30,8 @@ public class PaisController {
 
   @GetMapping("/{id}")
   public ResponseEntity busca(@PathVariable Integer id){
-    if(paisRepository.existsById(id)){
-      Optional<Pais> optionalPais = paisRepository.findById(id);
-      return ResponseEntity.ok(optionalPais);
-    }
-
-    return ResponseEntity.notFound().build();
+    Optional<Pais> optionalPais = paisRepository.findById(id);
+    return ResponseEntity.of(optionalPais);
   }
 
   @PostMapping
