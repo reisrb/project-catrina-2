@@ -10,6 +10,9 @@ public class Fabricante {
   private Integer id;
   private String nome;
 
+  @ManyToOne
+  private Pais pais;
+
   public Fabricante() {
   }
 
@@ -17,6 +20,7 @@ public class Fabricante {
     this.id = id;
     this.nome = nome;
   }
+
 
   public Integer getId() {
     return id;
@@ -32,5 +36,13 @@ public class Fabricante {
 
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  public Pais getPais() {
+    return pais;
+  }
+
+  public void setPais(Pais pais) {
+    this.pais = pais;
   }
 }
