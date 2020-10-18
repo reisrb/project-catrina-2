@@ -1,7 +1,10 @@
 package br.com.bandtec.catrinac2.controladores;
 
 import br.com.bandtec.catrinac2.dominios.Pais;
+import br.com.bandtec.catrinac2.dominios.Robo;
 import br.com.bandtec.catrinac2.repositorios.PaisRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,19 +12,30 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/pais")
+@RequestMapping("/paises")
 public class PaisController {
 
+  @Autowired
   private PaisRepository paisRepository;
 
   @GetMapping
-  private ResponseEntity listar(){
+  private ResponseEntity listar() {
     List<Pais> listBd = paisRepository.findAll();
 
-    if(listBd.isEmpty()){
+    if (listBd.isEmpty()) {
       return ResponseEntity.noContent().build();
     }
     return ResponseEntity.ok(listBd);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity busca(@PathVariable Integer id){
+    if(paisRepository.existsById(id)){
+      Optional<Pais> optionalPais = paisRepository.findById(id);
+      return ResponseEntity.ok(optionalPais);
+    }
+
+    return ResponseEntity.notFound().build();
   }
 
   @PostMapping
@@ -39,16 +53,14 @@ public class PaisController {
 
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity deletar(@PathVariable Integer id) {
-    Optional<Pais> optionalRobo = paisRepository.findById(id);
-
-    if (optionalRobo.isPresent()){
-      Pais pais = optionalRobo.get();
-      paisRepository.delete(pais);
+  @PutMapping("/{id}")
+  public ResponseEntity<Void> atualizar(@PathVariable Integer id, @RequestBody Pais pais) {
+    if (paisRepository.existsById(id)) {
+      pais.setId(id);
+      paisRepository.save(pais);
       return ResponseEntity.ok().build();
     }
-    return ResponseEntity.of(optionalRobo);
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
 
 }
