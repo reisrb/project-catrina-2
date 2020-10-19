@@ -1,4 +1,4 @@
-package br.com.bandtec.catrinac2.Lista;
+package br.com.bandtec.catrinac2.lista;
 
 public class ListaObj<T> {
     private T[] vetor;

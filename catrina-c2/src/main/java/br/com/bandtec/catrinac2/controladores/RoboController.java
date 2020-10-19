@@ -2,9 +2,12 @@ package br.com.bandtec.catrinac2.controladores;
 
 import br.com.bandtec.catrinac2.dominios.Fabricante;
 import br.com.bandtec.catrinac2.dominios.Robo;
+import br.com.bandtec.catrinac2.lista.Exportar;
+import br.com.bandtec.catrinac2.lista.ListaObj;
 import br.com.bandtec.catrinac2.repositorios.FabricanteRepository;
 import br.com.bandtec.catrinac2.repositorios.RoboRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +62,38 @@ public class RoboController {
       return ResponseEntity.ok().build();
     }
     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+  }
+
+  // Geração de arquivos para relatórios
+  @GetMapping(value = "/gerarCsv", produces = {"text/csv"})
+  @ResponseBody
+  public ResponseEntity exportarCsv(){
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Disposition", "attachment; filename=fabricante.csv");
+
+    String arquivo = Exportar.toCsv(converteListaObj(roboRepository.findAll()));
+
+    return new ResponseEntity(arquivo, headers, HttpStatus.OK);
+  }
+
+//  @GetMapping(value = "/gerarTxt", produces = {"text/plain"})
+//  @ResponseBody
+//  public ResponseEntity exportarTxt(){
+//    HttpHeaders headers = new HttpHeaders();
+//    headers.add("Content-Disposition", "attachment; filename=robos.txt");
+//
+//    String arquivo = Exportar.toTxt(converteListaObj(roboRepository.findAll()));
+//
+//    return new ResponseEntity(arquivo, headers, HttpStatus.OK);
+//  }
+
+  private ListaObj<Robo> converteListaObj(List<Robo> lista){
+    ListaObj<Robo> roboListaObj  = new ListaObj<>(lista.size());
+
+    for (Robo robo: lista) {
+      roboListaObj.adiciona(robo);
+    }
+    return roboListaObj;
   }
 
 }

@@ -1,7 +1,7 @@
 package br.com.bandtec.catrinac2.controladores;
 
-import br.com.bandtec.catrinac2.Lista.Exportar;
-import br.com.bandtec.catrinac2.Lista.ListaObj;
+import br.com.bandtec.catrinac2.lista.Exportar;
+import br.com.bandtec.catrinac2.lista.ListaObj;
 import br.com.bandtec.catrinac2.dominios.Fabricante;
 import br.com.bandtec.catrinac2.repositorios.FabricanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,28 +59,6 @@ public class FabricanteController {
       return ResponseEntity.ok().build();
     }
     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-  }
-
-  // Geração de arquivos para relatórios
-  @GetMapping(value = "/gerarCsv", produces = {"text/csv"})
-  @ResponseBody
-  public ResponseEntity exportarCsv(){
-    HttpHeaders headers = new HttpHeaders();
-    headers.add("Content-Disposition", "attachment; filename=fabricante.csv");
-
-    String arquivo = Exportar.csv(converteListaObj(fabricanteRepository.findAll()));
-
-    return new ResponseEntity(arquivo, headers, HttpStatus.OK);
-  }
-
-  private ListaObj<Fabricante> converteListaObj(List<Fabricante> lista){
-    ListaObj<Fabricante> listaObj = new ListaObj<>(lista.size());
-
-    for (Fabricante fabricante: lista) {
-      listaObj.adiciona(fabricante);
-    }
-
-    return listaObj;
   }
 
 }
