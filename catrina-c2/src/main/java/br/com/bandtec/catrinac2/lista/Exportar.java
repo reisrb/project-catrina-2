@@ -6,12 +6,12 @@ public class Exportar {
   public static String toCsv(ListaObj<Robo> lista) {
     String arquivo = "";
 
-    arquivo += String.format("%s;%s;%s%n", "ID", "Nome", "Pais");
+    arquivo += String.format("%s;%s;%s;%s%n", "ID", "Nome", "Fabricante","Pais");
 
     for (int i = 0; i < lista.getTamanho(); i++) {
       Robo robo = lista.getElemento(i);
 
-      arquivo += String.format("%d;%s;%s;%n",
+      arquivo += String.format("%d;%s;%s;%s;%n",
               robo.getId(), robo.getNome(), robo.getFabricante().getNome(), robo.getFabricante().getPais().getNome()
       );
     }

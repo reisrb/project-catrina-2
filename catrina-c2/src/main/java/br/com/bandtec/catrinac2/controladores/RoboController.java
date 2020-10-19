@@ -69,7 +69,7 @@ public class RoboController {
   @ResponseBody
   public ResponseEntity exportarCsv(){
     HttpHeaders headers = new HttpHeaders();
-    headers.add("Content-Disposition", "attachment; filename=fabricante.csv");
+    headers.add("Content-Disposition", "attachment; filename=robos.csv");
 
     String arquivo = Exportar.toCsv(converteListaObj(roboRepository.findAll()));
 
