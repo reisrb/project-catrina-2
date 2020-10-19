@@ -71,21 +71,10 @@ public class RoboController {
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Disposition", "attachment; filename=robos.csv");
 
-    String arquivo = Exportar.toCsv(converteListaObj(roboRepository.findAll()));
+    String listConvertExport = Exportar.toCsv(converteListaObj(roboRepository.findAll()));
 
-    return new ResponseEntity(arquivo, headers, HttpStatus.OK);
+    return new ResponseEntity(listConvertExport, headers, HttpStatus.OK);
   }
-
-//  @GetMapping(value = "/gerarTxt", produces = {"text/plain"})
-//  @ResponseBody
-//  public ResponseEntity exportarTxt(){
-//    HttpHeaders headers = new HttpHeaders();
-//    headers.add("Content-Disposition", "attachment; filename=robos.txt");
-//
-//    String arquivo = Exportar.toTxt(converteListaObj(roboRepository.findAll()));
-//
-//    return new ResponseEntity(arquivo, headers, HttpStatus.OK);
-//  }
 
   private ListaObj<Robo> converteListaObj(List<Robo> lista){
     ListaObj<Robo> roboListaObj  = new ListaObj<>(lista.size());
