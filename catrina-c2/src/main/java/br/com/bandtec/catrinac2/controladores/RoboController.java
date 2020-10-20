@@ -33,7 +33,7 @@ public class RoboController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity busca(@PathVariable Integer id){
+  public ResponseEntity busca(@PathVariable Integer id) {
     Optional<Robo> optionalRobo = roboRepository.findById(id);
     return ResponseEntity.of(optionalRobo);
   }
@@ -67,7 +67,7 @@ public class RoboController {
   // Geração de arquivos para relatórios
   @GetMapping(value = "/gerarCsv", produces = {"text/csv"})
   @ResponseBody
-  public ResponseEntity exportarCsv(){
+  public ResponseEntity exportarCsv() {
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Disposition", "attachment; filename=robos.csv");
 
@@ -76,10 +76,22 @@ public class RoboController {
     return new ResponseEntity(listConvertExport, headers, HttpStatus.OK);
   }
 
-  private ListaObj<Robo> converteListaObj(List<Robo> lista){
-    ListaObj<Robo> roboListaObj  = new ListaObj<>(lista.size());
+  @GetMapping(value = "/gerarTxt", produces = {"text/plain"})
+  @ResponseBody
+  public ResponseEntity exportarTxt() {
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Disposition", "attachment; filename=robos.txt");
 
-    for (Robo robo: lista) {
+    String listConvertExport = Exportar.toTxt(converteListaObj(roboRepository.findAll()));
+
+    return new ResponseEntity(listConvertExport, headers, HttpStatus.OK);
+
+  }
+
+  private ListaObj<Robo> converteListaObj(List<Robo> lista) {
+    ListaObj<Robo> roboListaObj = new ListaObj<>(lista.size());
+
+    for (Robo robo : lista) {
       roboListaObj.adiciona(robo);
     }
     return roboListaObj;
