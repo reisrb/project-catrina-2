@@ -30,7 +30,7 @@ public class Exportar {
 
     Date date = new Date();
 
-    arquivoTxt += String.format("00ROBOS%s\n",simpleDateFormat.format(date));
+    arquivoTxt += String.format("00ROBOS%s01\n",simpleDateFormat.format(date));
 
     for (int i = 0; i < lista.getTamanho(); i++) {
       Robo robo = lista.getElemento(i);
